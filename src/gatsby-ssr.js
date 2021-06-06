@@ -299,14 +299,16 @@ export const replaceRenderer = (
             // grab the last link in the tweet for the twee id
             const links = [].slice.call(post.getElementsByTagName('a'));
             const link = links[links.length - 1];
-            const hrefArr = link.href.split('/');
-            const id = hrefArr[hrefArr.length - 1].split('?')[0];
-            ampTwitter.setAttribute('data-tweetid', id);
-            // clone the original blockquote for a placeholder
-            const _post = post.cloneNode(true);
-            _post.setAttribute('placeholder', '');
-            ampTwitter.appendChild(_post);
-            post.parentNode.replaceChild(ampTwitter, post);
+            if(link) {
+              const hrefArr = link.href.split('/');
+              const id = hrefArr[hrefArr.length - 1].split('?')[0];
+              ampTwitter.setAttribute('data-tweetid', id);
+              // clone the original blockquote for a placeholder
+              const _post = post.cloneNode(true);
+              _post.setAttribute('placeholder', '');
+              ampTwitter.appendChild(_post);
+              post.parentNode.replaceChild(ampTwitter, post);
+            }
         });
 
         // convert iframes to amp-iframe or amp-youtube
