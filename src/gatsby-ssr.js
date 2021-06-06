@@ -362,17 +362,6 @@ export const replaceRenderer = (
             });
             iframe.parentNode.replaceChild(ampIframe, iframe);
         });
-        setHeadComponents(
-            Array.from(new Set(headComponents)).map((component, i) => (
-                <Fragment key={`head-components-${i}`}>
-                    <script
-                        async
-                        custom-element={component.name}
-                        src={`https://cdn.ampproject.org/v0/${component.name}-${component.version}.js`}
-                    />
-                </Fragment>
-            ))
-        );
         replaceBodyHTMLString(document.body.children[0].outerHTML);
     }
 };
