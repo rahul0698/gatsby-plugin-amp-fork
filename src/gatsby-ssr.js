@@ -311,6 +311,41 @@ export const replaceRenderer = (
             }
         });
 
+        //convert instagram post to amp-instagram 
+        const instagramPosts = [].slice.call(
+            document.getElementsByClassName('instagram-media')
+        );
+        instagramPosts.forEach((post) => {
+            headComponents.push({ name: 'amp-instagram', version: '0.1' });
+            const ampInstagram = document.createElement('amp-instagram');
+            const attributes = Object.keys(post.attributes);
+            const includedAttributes = attributes.map((key) => {
+                const attribute = post.attributes[key];
+                ampInstagram.setAttribute(attribute.name, attribute.value);
+                return attribute.name;
+            });
+            Object.keys(defaults.twitter).forEach((key) => {
+                if (
+                    includedAttributes &&
+                    includedAttributes.indexOf(key) === -1
+                ) {
+                  ampInstagram.setAttribute(key, defaults.instagram[key]);
+                }
+            });
+            // grab the last link in the tweet for the twee id
+            const instagramLink = post.attributes['data-instgrm-permalink'];
+            if(instagramLink) {
+              const hrefArr = instagramLink.nodeValue.split('/');
+              const id = hrefArr[hrefArr.length - 2];
+              ampInstagram.setAttribute('data-shortcode', id);
+              // clone the original blockquote for a placeholder
+              const _post = post.cloneNode(true);
+              _post.setAttribute('placeholder', '');
+              ampInstagram.appendChild(_post);
+              post.parentNode.replaceChild(ampInstagram, post);
+            }
+        });
+
         // convert iframes to amp-iframe or amp-youtube
         const iframes = [].slice.call(document.getElementsByTagName('iframe'));
         iframes.forEach((iframe) => {
