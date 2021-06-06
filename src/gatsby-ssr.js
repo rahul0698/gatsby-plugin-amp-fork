@@ -228,6 +228,11 @@ export const replaceRenderer = (
             height: '330',
             layout: 'responsive',
         },
+        instagram: {
+            width: '390',
+            height: '330',
+            layout: 'responsive',
+        },
         iframe: {
             width: 640,
             height: 475,
