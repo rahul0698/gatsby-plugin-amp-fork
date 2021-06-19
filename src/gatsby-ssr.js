@@ -389,7 +389,15 @@ export const replaceRenderer = (
 
             const includedAttributes = attributes.map((key) => {
                 const attribute = iframe.attributes[key];
-                ampIframe.setAttribute(attribute.name, attribute.value);
+                // check for width in percentage
+                if(key === 'width' && attribute.value) {
+                  const splitedWidth = attribute.value.split('');
+                  if(splitedWidth[splitedWidth.length - 1] === '%') {
+                    ampIframe.setAttribute(key, defaults.iframe[key]);
+                  }
+                } else {
+                    ampIframe.setAttribute(attribute.name, attribute.value);
+                }
                 return attribute.name;
             });
             Object.keys(defaults.iframe).forEach((key) => {
@@ -398,16 +406,7 @@ export const replaceRenderer = (
                     includedAttributes.indexOf(key) === -1
                 ) {
                     ampIframe.setAttribute(key, defaults.iframe[key]);
-                } else {
-                    // check for width in percentage
-                    if(key === 'width' && includedAttributes.indexOf(key) !== -1) {
-                      const splitedWidth = includedAttributes[key].split('');
-                        console.log('splitted width', splitedWidth)
-                      if(splitedWidth[splitedWidth.length - 1] === '%') {
-                        ampIframe.setAttribute(key, defaults.iframe[key]);
-                      }
-                    }
-                }
+                } 
             });
             iframe.parentNode.replaceChild(ampIframe, iframe);
         });
