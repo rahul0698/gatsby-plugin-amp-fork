@@ -389,15 +389,7 @@ export const replaceRenderer = (
 
             const includedAttributes = attributes.map((key) => {
                 const attribute = iframe.attributes[key];
-                // check for width in percentage
-                if(key === 'width' && attribute.value) {
-                  const splitedWidth = attribute.value.split('');
-                  if(splitedWidth[splitedWidth.length - 1] === '%') {
-                    ampIframe.setAttribute(key, defaults.iframe[key]);
-                  }
-                } else {
-                    ampIframe.setAttribute(attribute.name, attribute.value);
-                }
+                ampIframe.setAttribute(attribute.name, attribute.value);
                 return attribute.name;
             });
             Object.keys(defaults.iframe).forEach((key) => {
