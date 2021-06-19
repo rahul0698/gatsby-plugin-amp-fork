@@ -397,17 +397,16 @@ export const replaceRenderer = (
                     includedAttributes &&
                     includedAttributes.indexOf(key) === -1
                 ) {
+                    ampIframe.setAttribute(key, defaults.iframe[key]);
+                } else {
                     // check for width in percentage
-                    console.log('includedAttributes', includedAttributes)
-                    console.log('key', key)
-                    if(key === 'width' && includedAttributes.indexOf(key) >= 0) {
+                    if(key === 'width' && includedAttributes.indexOf(key) !== -1) {
                       const splitedWidth = includedAttributes[key].split('');
                         console.log('splitted width', splitedWidth)
                       if(splitedWidth[splitedWidth.length - 1] === '%') {
                         ampIframe.setAttribute(key, defaults.iframe[key]);
                       }
                     }
-                    ampIframe.setAttribute(key, defaults.iframe[key]);
                 }
             });
             iframe.parentNode.replaceChild(ampIframe, iframe);
