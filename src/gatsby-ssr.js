@@ -398,7 +398,7 @@ export const replaceRenderer = (
                     includedAttributes.indexOf(key) === -1
                 ) {
                     // check for width in percentage
-                    if(key === width && includedAttributes.indexOf(key) >= 0) {
+                    if(key === 'width' && includedAttributes.indexOf(key) >= 0) {
                       const splitedWidth = includedAttributes[key].split('');
                       if(splitedWidth[splitedWidth.length - 1] === '%') {
                         ampIframe.setAttribute(key, defaults.iframe[key]);
