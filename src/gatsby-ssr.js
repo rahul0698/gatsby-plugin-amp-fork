@@ -394,7 +394,7 @@ export const replaceRenderer = (
                   const splitedWidth = attribute.value.split('');
 
                   if (splitedWidth[splitedWidth.length - 1] === '%') {
-                    ampIframe.setAttribute(attribute.name, defaults.iframe[key]);
+                    ampIframe.setAttribute(attribute.name, defaults.iframe['width']);
                   }
                 } else {
                   ampIframe.setAttribute(attribute.name, attribute.value);
