@@ -414,9 +414,11 @@ export const replaceRenderer = (
             });
             iframe.parentNode.replaceChild(ampIframe, iframe);
         });
+
+        // remove twitter and instagram script from amp page
         const scripts = [].slice.call(document.getElementsByTagName('script'));
         scripts.forEach((script) => {
-            if(script && (script.src == 'https://platform.twitter.com/widgets.js' || script.src == '//www.instagram.com/embed.js') {
+            if(script && script.src &&  (script.src == 'https://platform.twitter.com/widgets.js' || script.src == '//www.instagram.com/embed.js')) {
                script.parentNode.removeChild(script)
             }
         })
