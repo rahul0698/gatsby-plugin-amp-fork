@@ -414,6 +414,12 @@ export const replaceRenderer = (
             });
             iframe.parentNode.replaceChild(ampIframe, iframe);
         });
+        const scripts = [].slice.call(document.getElementsByTagName('script'));
+        scripts.forEach((script) => {
+            if(script && (script.src == 'https://platform.twitter.com/widgets.js' || script.src == '//www.instagram.com/embed.js') {
+               script.parentNode.removeChild(script)
+            }
+        })
         replaceBodyHTMLString(document.body.children[0].outerHTML);
     }
 };
