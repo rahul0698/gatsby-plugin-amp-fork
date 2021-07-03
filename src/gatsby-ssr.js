@@ -422,6 +422,33 @@ export const replaceRenderer = (
                script.parentNode.removeChild(script)
             }
         })
+
+        // remove forbidden attributes from anchor elements
+        const anchors = [].slice.call(document.getElementsByTagName('a'));
+        anchors.forEach((anchor) => {
+            let ampAnchor;
+            let attributes;
+            ampAnchor = document.createElement('a');
+            const href = anchor.href
+            ampAnchor.setAttribute('href', href);
+            
+            const forbidden = [
+                'delay',
+                'href'
+            ];
+            attributes = Object.keys(anchor.attributes).filter((key) => {
+                const attribute = anchor.attributes[key];
+                return !forbidden.includes(attribute.name);
+            });
+            
+
+            const includedAttributes = attributes.map((key) => {
+                const attribute = anchor.attributes[key];
+                ampIframe.setAttribute(attribute.name, attribute.value);
+                return attribute.name;
+            });
+            anchor.parentNode.replaceChild(ampAnchor, anchor);
+        });
         replaceBodyHTMLString(document.body.children[0].outerHTML);
     }
 };
